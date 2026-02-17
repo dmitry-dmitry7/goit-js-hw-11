@@ -61,3 +61,25 @@
   letter-spacing: 0.04em;
   color: #fff;
 }
+
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px 24px;
+  box-sizing: border-box;
+  justify-content: center;
+  margin: auto;
+  padding: 24px 156px;
+
+  width: 1440px;
+  height: 696px;
+}
+
+.gallery-link {
+  display: flex;
+}
+
+.gallery-image {
+  width: 360px;
+  height: 200px;
+}
