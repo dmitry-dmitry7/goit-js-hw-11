@@ -12,4 +12,7 @@ export function getImagesByQuery(query) {
       per_page: "9"
 	}
   })
+    .then(response => {
+      return response.data.hits; 
+    })
 }

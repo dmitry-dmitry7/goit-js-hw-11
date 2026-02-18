@@ -24,8 +24,7 @@ function handleSubmit(event) {
   showLoader();
   getImagesByQuery(searchText)
     .then(response => {
-      const images = response.data.hits; 
-    
+      const images = response; 
       if (images.length === 0) {
         iziToast.error({
           message: 'Sorry, there are no images matching your search query. Please try again!',
