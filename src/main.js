@@ -1,12 +1,11 @@
-// import axios from "axios";
-// import iziToast from "izitoast";
-// import "izitoast/dist/css/iziToast.min.css";
-
+import iziToast from "izitoast";
+import "izitoast/dist/css/iziToast.min.css";
 
 import { getImagesByQuery } from './js/pixabay-api';
+import { createGallery, clearGallery, showLoader, hideLoader } from './js/render-functions';
+
 
 const form = document.querySelector(".form");
-// const gallery = document.querySelector("ul.gallery");
 
 form.addEventListener("submit", handleSubmit);
 
@@ -14,11 +13,40 @@ function handleSubmit(event) {
   event.preventDefault();
   const searchText = event.target.elements[0].value.trim();
   if(!searchText.length) {
-    alert("Рядок повинен існувати");
+    iziToast.warning({
+      message: 'The line must not be empty!',
+      position: 'topRight',
+    });
     return;
   }
+
+  clearGallery();  
+  showLoader();
+  getImagesByQuery(searchText)
+    .then(response => {
+      const images = response.data.hits; 
     
-  getImagesByQuery(searchText);
+      if (images.length === 0) {
+        iziToast.error({
+          message: 'Sorry, there are no images matching your search query. Please try again!',
+          position: 'topRight',
+        });
+      } else {
+        createGallery(images);
+      }
+    })
+    .catch(error => {
+  	  iziToast.error({
+        message: error.message,
+        position: 'topRight',
+      });
+    })
+    .finally(() => {
+      hideLoader();
+    });
     
   form.reset();
 }
+
+
+  
